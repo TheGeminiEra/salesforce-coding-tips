@@ -1,0 +1,19 @@
+Khi sử dụng library DataTable để hiển thị kết quả search ở các màn hình search.
+Chú ý khi hiển thị giá trị của các field LongText, cần phải xem xét chuyển đổi ký tự "<" và ">" thành HTML code rồi mới hiển thị.
+Vì có khả năng trong các field LongText, sẽ chứa các tab của html. Nếu không thực hiện chuyển đổi, có khả năng xảy ra lỗi hiển thị
+code jquery lên màn hình.
+
+*) Code Sample
+
+        String strKey = '';
+        if(String.isNotBlank(strField)) {
+            strField= strField.replace('<br />', '\n').replace('<br/>', '\n');
+            strField= strField.replace('\r\n', '\n');
+
+            strKey = strField.replace('<', '&#60;');
+            strKey = strField.replace('>', '&#62;');
+
+            if(strKey.contains('\n') || strKey.contains('\r\n')) {
+                strKey = strKey.replace('\r\n', '<br />').replace('\n', '<br />');
+            }
+        }

@@ -1,0 +1,3 @@
+Description
+
+Khi dử dụng thuộc tính async trong thẻ script thì khi sử dụng load xong page nên gọi method trong window.onload

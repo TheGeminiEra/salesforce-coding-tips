@@ -1,0 +1,5 @@
+Description:
+@-moz-document url-prefix(){
+input[type="checkbox"]{
+-moz-appearance: none;
+}}

@@ -1,0 +1,61 @@
+Description
+
+1. trên mh SEARCH nếu có đk INPUT kiểu DATE mà lấy giá trị đã input đi SEARCH.
+Thi cần phải CHU Ý kiểu dữ liệu của FIELD đang search là DATE hay DATETIME.
+Nếu là DATETIME thì phải chuyển DATE thành DATETIME rồi mới đem đi search!!!
+Vì trong DB của SF nó sẽ lưu trữ GMT+0
+Khi search nếu không convert thì kết quả sẽ bị SAI.
+
+    Datetime inputFromDate, inputToDate;
+    // 日付から日付/時間を変換する
+    if (objSearchCondition.fromDate != null) {
+        Date dtStart = objSearchCondition.fromDate;
+        inputFromDate = Datetime.newInstance(dtStart.year(), dtStart.month(), dtStart.day(), 0, 0, 0);
+    }
+    if (objSearchCondition.toDate != null) {
+        Date dtEnd = objSearchCondition.toDate.addDays(1);
+        inputToDate = Datetime.newInstance(dtEnd.year(), dtEnd.month(), dtEnd.day(), 0, 0, 0);
+    }
+    if (inputFromDate != null) {
+        conditionList.add('Quote.CreatedDate >=:inputFromDate');
+    }
+    if (inputToDate != null) {
+        conditionList.add('Quote.CreatedDate <:inputToDate'); <----- chú ý chỗ này là < nha!
+    }
+2. khi update data từ file CSV
+xxx
+
+3. đối với task .NET
+xxx
+
+History
+#1Updated by Hien Nguyen Hoang over 1 year ago
+Quote
+date dtStart = date.newInstance(2019, 10, 29);
+date dtEnd = date.newInstance(2019, 10, 29).addDays(1);
+datetime dtt;
+dtt = Datetime.newInstance(dtStart.year(), dtStart.month(), dtStart.day(), 0, 0, 0);    
+system.debug('xxx start=' + dtt);
+system.debug('xxx start=' + dtt.formatGMT('yyyy-MM-dd') + 'T' + dtt.formatGMT('HH:mm:ss.SSS') + 'Z');
+
+dtt = Datetime.newInstance(dtEnd.year(), dtEnd.month(), dtEnd.day(), 0, 0, 0).addSeconds(-1);    
+system.debug('xxx   end=' + dtt);
+system.debug('xxx start=' + dtt.formatGMT('yyyy-MM-dd') + 'T' + dtt.formatGMT('HH:mm:ss.SSS') + 'Z');
+
+#2Updated by Hien Nguyen Hoang over 1 year ago
+Quote
+            // 日付から日付/時間を変換する
+            if (objSearchCondition.fromDate != null) {
+                Date dtStart = objSearchCondition.fromDate;
+                inputFromDate = Datetime.newInstance(dtStart.year(), dtStart.month(), dtStart.day(), 0, 0, 0);
+            }
+            if (objSearchCondition.toDate != null) {
+                Date dtEnd = objSearchCondition.toDate.addDays(1);
+                inputToDate = Datetime.newInstance(dtEnd.year(), dtEnd.month(), dtEnd.day(), 0, 0, 0);
+            }
+                if (inputFromDate != null) {
+                    conditionList.add('Quote.CreatedDate >=:inputFromDate');
+                }
+                if (inputToDate != null) {
+                    conditionList.add('Quote.CreatedDate <:inputToDate'); <----- chú ý chỗ này là < nha!
+                }

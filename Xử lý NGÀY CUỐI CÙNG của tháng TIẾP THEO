@@ -1,0 +1,26 @@
+Trường hợp xử lý NGÀY CUỐI CÙNG của tháng TIẾP THEO thì tham khảo bên dưới:
+
+NG:
+
+numberOfDays = Date.daysInMonth(objSetting.LastClosingDate__c.year()
+                   , objSetting.LastClosingDate__c.addMonths(1).month());
+lastDayOfMonth = Date.newInstance(objSetting.LastClosingDate__c.year()
+                    , objSetting.LastClosingDate__c.addMonths(1).month()
+                    , numberOfDays);
+OK:
+
+objSetting.LastClosingDate__c.addMonths(2).toStartOfMonth().addDays(-1);
+=============================
+Công thức: xxxDate.addMonths(n).toStartOfMonth().addDays(-1);
+Vi du:
+
+tháng hiện tại: n =  1
+-> xxxDate.addMonths(1).toStartOfMonth().addDays(-1);
+tháng tiêp theo: n = 2
+-> xxxDate.addMonths(2).toStartOfMonth().addDays(-1);
+tháng trước đó: n = 0
+-> xxxDate.addMonths(0).toStartOfMonth().addDays(-1);
+=============================
+
+Link tham khảo:
+https://developer.salesforce.com/docs/atlas.en-us.apexcode.meta/apexcode/apex_methods_system_date.htm

@@ -1,0 +1,25 @@
+Description
+
+Do salesforce lưu data kiểu Datetime trong database ở múi giờ GMT+0 nên khi sử dụng Datetime.newInstance trong apex code sẽ nhận được giá trị date time GMT+0. nếu lấy kết quả này lưu vào database, search từ database thì không sao nhưng nếu sử dụng để tính toán, format trên apex code sẽ bị sai.
+ở trường hợp cần lấy kiểu dữ liệu Datetime để tính toán, không tác lưu vào database thì sử dụng Datetime.newInstanceGmt để nhận giá trị datetime theo input.
+
+Datetime d1 = Datetime.newInstance(2019, 10, 31, 12,0,0);
+Datetime d2 = Datetime.newInstanceGmt(2019, 10, 31, 12, 0, 0);
+system.debug('d1: ' + d1);
+system.debug('=====');
+system.debug('d2: ' + d2);
+
+
+Do salesforce lưu data kiểu Datetime trong database ở múi giờ GMT+0 nên khi sử dụng Datetime.newInstance trong apex code sẽ nhận được giá trị date time GMT+0. nếu lấy kết quả này lưu vào database, search từ database thì không sao nhưng nếu sử dụng để tính toán, format trên apex code sẽ bị sai.
+ở trường hợp cần lấy kiểu dữ liệu Datetime để tính toán, không tác lưu vào database thì sử dụng Datetime.newInstanceGmt để nhận giá trị datetime theo input.
+
+Datetime d1 = Datetime.newInstance(2019, 10, 31, 12,0,0);
+Datetime d2 = Datetime.newInstanceGmt(2019, 10, 31, 12, 0, 0);
+system.debug('d1: ' + d1);
+system.debug('=====');
+system.debug('d2: ' + d2);
+==========>
+
+11:55:51:003 USER_DEBUG [3]|DEBUG|d1: 2019-10-31 03:00:00
+11:55:51:003 USER_DEBUG [4]|DEBUG|=====
+11:55:51:003 USER_DEBUG [5]|DEBUG|d2: 2019-10-31 12:00:00

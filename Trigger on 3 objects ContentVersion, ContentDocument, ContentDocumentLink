@@ -1,0 +1,50 @@
+Description
+
+Here is a brief summary of the chain of events when uploading (inserting), editing (changing the Description) and deleting a file.
+It is different depending on whether you are using Salesforce Classic or Lightning Experience.
+
+Classic - INSERT:
+    ContentVersion          before  insert - no ContentDocumentId
+    ContentDocumentLink     before  insert - LinkEntity = current user
+    ContentDocumentLink     after   insert - has Id
+    ContentVersion          after   insert - has Id, ContentDocumentId
+    ContentDocumentLink     before  insert - LinkEntity = object
+    ContentVersion          before  update - Publish status changed from R to P
+    ContentVersion          after   update - 
+    ContentDocumentLink     after   insert - has Id
+
+Classic - UPDATE:
+    ContentVersion          before  update
+    ContentDocument         before  update
+    ContentVersion          after   update
+    ContentDocument         after   update
+
+Classic - DELETE:
+    ContentDocument         before  delete
+    ContentDocument         after   delete
+
+LX - INSERT:
+    ContentVersion          before  insert - no ContentDocumentId
+    ContentDocument         before  insert
+    ContentDocument         after   insert
+    ContentDocumentLink     before  insert - LinkEntity = current user
+    ContentDocumentLink     before  insert - LinkEntity = object
+    ContentDocumentLink     after   insert - LinkEntity = current user
+    ContentDocumentLink     after   insert - LinkEntity = object
+    ContentDocument         before  update - Publish status changed from U to P
+    ContentDocument         after   update
+    ContentVersion          after   insert
+
+LX - UPDATE:
+    ContentVersion          before  update
+    ContentDocument         before  update
+    ContentDocument         after   update
+    ContentVersion          after   update
+
+LX - DELETE:
+    ContentDocument         before  delete
+    ContentDocument         after   delete
+*)　To create data test for testclass or run testcase via developer console, we should do as below:
+1 - create ContentVersion
+2 - get ContentDocumentId from ContentDocument
+3 - Create ContentDocumentLink with ContentDocumentId that is get and LinkedEntityId is created before

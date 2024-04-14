@@ -1,0 +1,65 @@
+<aura:component implements="force:lightningQuickActionWithoutHeader,flexipage:availableForRecordHome,force:hasRecordId" access="global" controller="PRO_ProjectMemberEntryController">
+    <aura:attribute name="objGroup" type="PRO_Group__c"/>
+    <!--モーダルヘッダー--> 
+    <lightning:spinner variant="brand" size="medium" alternativeText="スピナーローディング" aura:id="spinnerId" class="slds-hide"/>
+
+</aura:component>
+
+==========================================
+
+
+/** getData
+     *
+     * @param  {[component]}
+     * @param  {[intCountAllData]}
+     * @return {[component]}
+     * @created: 2019/07/29 Ksvc xxxxxxxxxxxxxxxxxxxxxx
+     * @modified: 
+     */
+    getData: function(component, strUserName){
+        // bat watting len xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        this.showHideSpinner(component);
+        var action = component.get("c.actionSearch");
+        action.setParams({
+            strNameSearch: strUserName
+        });
+
+        action.setCallback(this, function(result) {
+            var state = result.getState();
+            if (component.isValid() && state === "SUCCESS"){
+                var resultData = result.getReturnValue();
+                component.set("v.strMessErrorResult", resultData.strMessErrorResult);
+                component.set("v.strMessErrorInPage", resultData.strMessErrorInPage);
+                component.set("v.isDisabled", resultData.isDisabled);    
+                component.set("v.listUser", resultData.listUser);    
+
+                // tat watting di xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                this.showHideSpinner(component);
+
+            } else if (component.isValid() && state === "ERROR") {
+                var errors = result.getError();
+                if (errors) {
+                    if (errors[0] && errors[0].message) {
+                        component.set("v.strMessErrorInPage", errors[0].message);
+                    }
+                } else {
+                    component.set("v.strMessErrorInPage", "Unknown error");
+                }
+                // tat watting di xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                this.showHideSpinner(component);
+            }
+        });
+        $A.enqueueAction(action);
+    },
+    /** showHideSpinner
+     *
+     * @param  {[component]}
+     * @return 
+     * @created: 2019/07/29 Ksvc xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+     * @modified: 
+     */
+    showHideSpinner: function(component) {
+        var spinner = component.find("spinnerId");
+        $A.util.toggleClass(spinner, "slds-hide");
+        $A.util.toggleClass(spinner, "slds-show");
+    },

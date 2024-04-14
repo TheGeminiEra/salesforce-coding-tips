@@ -1,0 +1,15 @@
+Description
+
+Hiện tại, nếu tạo file testclass từ vs code thì khi mở màn hình console test sẽ thấy file testclass có trong list Overall Code Coverage
+
+
+
+Để remove file testclass trong list này thì có 2 cách như sau:
+1. Backup file testclass -> xóa -> lên console tạo mới file và copy code từ file backup vào.
+2. Ở Developer console -> Query run câu SOQL sau (nhớ check chọn Use Tooling API ở phía dưới bên trái màn hình)
+
+SELECT Id, ApexClassOrTriggerId, ApexClassOrTrigger.Name,
+     NumLinesCovered, NumLinesUncovered 
+FROM ApexCodeCoverageAggregate
+
+Ở danh sách kết quả, tìm đến record có name là file testclass muốn remove sau đó xóa đi và run lại.

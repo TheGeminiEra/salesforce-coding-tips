@@ -1,0 +1,4 @@
+Bị sai height do chênh lệch chỉ số làm tròn sang Integer (Khi có nhiều item thì bị sai số nhiều)　IE
+Description
+
+outerHeight trên IE ko hiểu, dùng getBoundingClientRect().height

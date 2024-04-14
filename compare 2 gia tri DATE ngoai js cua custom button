@@ -1,0 +1,47 @@
+Description
+
+Khi get field Date của Object với JavaScript từ môi trường phải lồng trong ngoặc để biến nhận giá trị Date kiểu String nếu không môi trường sẽ trả về biến có dạng number được parse từ Date, rồi sau đó thực hiện new Date(paramDate) để chuyển từ String sang Date và so sánh.
+
+Muốn so sánh với System.Date với ngày trước đó hoặc ngày sau đó cần tách ngày(day), tháng(month), năm(year) rồi new Date(year, month, day) để đưa today về thời gian 00:00:00 để so sánh nếu có compare Today = DateTo tránh trường hợp DateTo đã chọn nhỏ hơn Today.
+
+// Hàm Compare
+function compareTwoDateWithToday(dateFrom, dateTo, isCheckFieldNull) {
+    // System.Date (Today)
+    var todayDate = new Date();
+    var date = todayDate.getDate();
+    var month = todayDate.getMonth();
+    var year = todayDate.getFullYear();
+    todayDate = new Date(year, month, date);
+
+    // Trường hợp so sánh DateFrom hoặc DateTo có thể bị blank(null)
+    if (isCheckFieldNull) {
+        if (dateFrom != "" && dateTo != "") {
+            dateFrom = new Date(dateFrom);
+            dateTo = new Date(dateTo);
+        } else if (dateFrom == "" && dateTo != ""){
+            dateFrom = new Date(year, month, date);
+            dateTo = new Date(dateTo);
+        } else if (dateFrom != ""  && dateTo == ""){
+            dateFrom = new Date(dateFrom);
+            dateTo = new Date(year, month, date);
+        }
+    }
+    // Trường hợp không check blank(null) field Date    
+    else {
+
+        dateFrom = new Date(dateFrom);
+        dateTo = new Date(dateTo);
+    }
+
+    if ((dateFrom <= todayDate) && (dateTo >= todayDate)) {
+        alert('error message !!!!!!!!!!!!!!!!!!!!!!');
+    } else {
+        // 次の処理
+    }
+}
+Sử dụng
+
+// Get Date from server
+var dateFrom = "{!APC_Irai__c.APC_HensoBlock_From__c}";
+var dateTo = "{!APC_Irai__c.APC_HensoBlock_To__c}";
+compareTwoDateWithToday(dateFrom, dateTo, false);

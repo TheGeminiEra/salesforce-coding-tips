@@ -1,0 +1,3 @@
+Description
+
+Khi gởi value trên parameter thì nên encode value r sau đó mới gởi lên controller, tránh gặp các ký tự đặc biệt trên controller sẽ ko lấy đúng giá trị.

@@ -1,0 +1,20 @@
+Description
+
+sfdx force:data:tree:export -q "SELECT Name, Location__Latitude__s, Location__Longitude__s FROM Account WHERE Location__Latitude__s != NULL
+AND Location__Longitude__s != NULL" -d ./data
+
+sfdx force:data:tree:import --sobjecttreefiles data/Account.json
+
+sfdx force:user:permset:assign -n "samplePerm" -u TempUnmanaged
+
+sfdx force:source:convert -d outputTmp/
+
+sfdx force:project:create -n geolocation
+
+sfdx force:mdapi:deploy -d outputTmp/ -u TempUnmanaged -w 100
+
+sfdx force:org:create -f config/project-scratch-def.json -a TempUnmanaged
+
+sfdx force:config:set defaultusername=test-wvkpnfm5z113@example.com
+
+http://sfdcinpractice.com/index.php/2018/02/14/simplified-command-line-tool-salesforce-dx/

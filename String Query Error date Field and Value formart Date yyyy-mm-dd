@@ -1,0 +1,45 @@
+Description
+
+Trong batch neu thuc hien query string nhu ben duoi se bi loi cu phap.
+
+String strRecodType = '完成基準型';
+String strOppotunityType = 'イニシャル';
+String firstDateSetting = Datetime.newInstance(firstDateClosingSetting.year(), 
+                                        firstDateClosingSetting.month(), 
+                                        firstDateClosingSetting.day()).format('yyyy-MM-dd');
+System.debug('TESTING----------: '+ firstDateSetting);
+Date test = Date.parse(firstDateSetting);
+System.debug('TESTSTSTAAAAA: ' + test);
+String queryString = 'SELECT Id '                              // Id
+                    + ',JobManagement_look__c '                // 案件
+                    + ',INSPECTION_DATE__c '                   // 検収日
+                    + ',ESTIMATED_AMOUNT__c '                  // 見積金額
+                    + ',ConsumptionTax__c '                    // 消費税率
+                + 'FROM teamspirit__AtkJob__c '
+                + 'WHERE RecordingType__c =: strRecodType '
+                + 'AND JobManagement_look__r.OPPORTUNITY_TYPE__c =: strOppotunityType '
+                + 'AND INSPECTION_DATE__c >=: firstDateClosingSetting ';
+// 勤怠ジョブレコードを取得する。
+System.debug('String Queryyyyyyyyy: '+ queryString);
+return Database.getQueryLocator(queryString);
+Co the fix theo 2 cach ben duoi:
+
+Cach1:
+
+        return Database.getQueryLocator([Select Id, JobManagement_look__c, JobManagement_look__r.OPPORTUNITY_TYPE__c
+                                        ,INSPECTION_DATE__c, ESTIMATED_AMOUNT__c, ConsumptionTax__c, RecordingType__c
+                                        From teamspirit__AtkJob__c
+                                        Where RecordingType__c =: strRecodType
+                                        And JobManagement_look__r.OPPORTUNITY_TYPE__c =: strOppotunityType
+                                        And INSPECTION_DATE__c >=: firstDateClosingSetting]);
+Cach2:
+
+String queryString = 'SELECT Id ' // Id
+    ',JobManagement_look__c ' // 案件
+    + ',INSPECTION_DATE__c ' // 検収日
+    + ',ESTIMATED_AMOUNT__c ' // 見積金額
+    + ',ConsumptionTax__c ' // 消費税率
+    + 'FROM teamspirit__AtkJob__c '
+    + 'WHERE RecordingType__c =: strRecodType '
+    + 'AND JobManagement_look__r.OPPORTUNITY_TYPE__c =: strOppotunityType '
+    + 'AND INSPECTION_DATE__c >= ' + firstDateClosingSetting;

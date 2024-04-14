@@ -1,0 +1,22 @@
+Description
+
+Ở thiết lập default vì component được cache nên cần tốn thời gian logout và page refresh nhiều lần để xác nhận kết quả development
+Có thể vô hiệu hóa cache dựa vào thiết lập bên dưới:
+
+Lightning Component開発環境におけるキャッシュ無効化手順
+1. ギアアイコン (ギアアイコン) をクリックし、[Setup (設定)] を選択します。
+2. [Quick Find (クイック検索)] ボックスに「Session」と入力し、[Session Settings (セッションの設定)] を選択します。
+3. [Caching (キャッシュ)] セクションにスクロールし、[Enable secure and persistent browser caching to improve performance (パフォーマンスを向上させるためにブラウザの安全で永続的なキャッシュを有効にする)] をオフにします。
+4. [Save (保存)] をクリックします。
+
+Thứ tự vô hiệu hóa cache ở môi trường phát triển Lightning Component
+1. click gear icon, chọn [Setup (設定)]
+2. Trong box [Quick Find (クイック検索)], input 「Session」 và chọn [Session Settings (セッションの設定)]
+3. scroll ở phần [Caching (キャッシュ)] và off [Enable secure and persistent browser caching to improve performance (để cải thiện performance thì làm hữu hiệu cache liên tục bằng sự an toàn browser)]
+4. click [Save (保存)]
+
+
+
+=============================
+
+LUU Y: vi day lien quan de setting cua HE THONG, nen phai de ben JP setting, ben VN ko duoc tu y setting!

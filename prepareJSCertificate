@@ -1,0 +1,102 @@
+// 1 of 65
+const exec = (item, delay) =>
+new Promise (resolve => setTimeout(() => resolve (item), delay));
+
+async function runPerallel () {
+    const [result1, result2, result3] = await Promise.all (
+        [exec ('x', '100'), exec ('y', '500'), exec ('z', '100')]
+    );
+    return `parallel is done : $(result1), $(result2) $(result3)`;
+}
+
+// a
+async runPerallel().then(data); 
+
+// b
+runPerallel().done(function (data) {
+    return data;
+});
+
+// c
+runPerallel().then(data);
+
+// D Đáp án đúng
+runPerallel().then(function(data) {
+    return data;
+});
+
+// 2 of 65
+const sum3 = (arr) => {
+    if (!arr.length) return 0;
+    if (arr.length === 1) return arr[0];
+    if (arr.length === 2) return arr[0] + arr[1];
+    return arr[0] + arr[1] + arr[2];
+}
+Which two assert statements are valid test for this function?
+Choose 2 answers:
+// a
+console.assert(sum3 ([1, '2']) == 12);
+
+// b
+console.assert(sum3([0]) === 0);
+
+// c
+console.assert(sum3 ([-3, 2]) === -1);
+
+// d
+console.assert(sum3 (['hello', 2, 3, 4]) === NaN);
+
+
+// 3 of 65. Which statement parses successfully?
+// A 
+//JSON.parse(`foo`);
+
+// B
+//JSON.parse("foo");
+
+// C.
+//JSON.parse("'foo'");
+
+// D
+JSON.parse('"foo"');
+
+Answer: D
+
+// 4 of 65. 
+let car1 = new Promise((_, reject) =>
+setTimeout (reject, 2000, "Car 1 crashed in")
+);
+
+let car2 = new Promise(resolve => 
+setTimeout (resolve, 1500, "Car 2 completed")
+);
+
+let car3 = new Promise(resolve => 
+setTimeout (resolve, 3000, "Car 3 completed")
+);
+
+Promise.race ([car1, car2, car3])
+    .then(value => {
+        let result = `${value} the race.`;
+    })
+    .catch(err => {
+        console.log("Race is cancelled" ,err);
+});
+
+// A.Car 3 completed the race
+// A.Car 1 completed the race
+// C.Car 2 completed the race
+// D.Race is cancelled
+
+Answer: C
+
+// 5 of 65
+for (let number =2; number <= 5; number +=1) {
+    // Insert code statement here
+    // assert(number % 2 === 0);
+    // console.error(number % 2 === 0);
+    // console.debug(number % 2 === 0);
+    // console.assert(number % 2 ===0);
+}
+
+Answer: D. "console.assert(number % 2 ===0);"

@@ -1,0 +1,35 @@
+Trường hợp có xử lý làm tròn thì phải tham khảo bên dưới:
+1. 小数点 n 桁目を四捨五入する
+
+a.setscale(n-1, System.RoundingMode.HALF_UP)
+Trường hợp ko chỉ định tham số RoundingMode thì sẽ bi sai như bên dưới:
+
+lênh: a.setscale(3)
+kết quả:
+0.0015 -> 0.002
+0.0016 -> 0.002
+0.0024 -> 0.002
+0.0025 -> 0.002 => NG
+0.0026 -> 0.003
+
+===============================================
+
+lênh: a.setscale(3, System.RoundingMode.HALF_UP)
+kết quả:
+0.0015 -> 0.002
+0.0016 -> 0.002
+0.0024 -> 0.002
+0.0025 -> 0.003
+0.0026 -> 0.003
+
+2. 小数点以下は切り落とし
+lênh: a.round(System.RoundingMode.DOWN)
+kết quả:
+1.1015 -> 1
+1.2016 -> 1
+1.5024 -> 1
+1.6025 -> 1
+1.9026 -> 1
+
+Link tham khảo:
+https://developer.salesforce.com/docs/atlas.en-us.apexcode.meta/apexcode/apex_methods_system_decimal.htm

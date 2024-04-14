@@ -1,0 +1,39 @@
+Description
+
+Trigger bị CALL nhiều lần:
+
+Nguyên nhân:
+- trong object có setting các rule hay workflow để update chính nó
+- có rollup summary dẫn đến việc update chính nó
+- ...
+
+Cách giải quyết:
+- sử dụng biến static để check, tham khảo source bên dưới
+
+public with sharing class NhanVienTriggerHandler {
+    // =========================================
+    public static Boolean firstRun = true;
+    // =========================================
+    public void onAfterInsert(Map<id, NhanVien__c> mapInsertNV){
+        list<NhanVien__c> lstNV = [select id, name, Dia_chi__c 
+                from NhanVien__c 
+                where id in: mapInsertNV.keyset()];
+
+        for(NhanVien__c nv : lstNV){
+            nv.Dia_chi__c = 'xxxx';
+        }
+        update lstNV;
+    }
+}
+trigger NhanVienTrigger on NhanVien__c (after insert, after update) {
+    // =========================================
+    if(NhanVienTriggerHandler.firstRun){
+        NhanVienTriggerHandler.firstRun = false;
+        // =========================================
+
+        if(trigger.isAfter){
+            NhanVienTriggerHandler hander = new NhanVienTriggerHandler();
+            hander.onAfterInsert(trigger.newMap);
+        }
+    }
+}
